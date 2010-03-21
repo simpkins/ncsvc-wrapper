@@ -122,6 +122,17 @@ librtwrap_init()
     dbg_log("rtwrap starting at %ld", (long)time(NULL));
 
     /*
+     * Unset the LD_PRELOAD environment variable.
+     * Our wrapper library only needs to be loaded for ncsvc itself,
+     * not other programs that it execs.
+     *
+     * (Furthermore, ncsvc is a 32-bit executable so our wrapper library is
+     * too.  However, on 64-bit systems it execs some 64-bit programs, can't
+     * load our 32-bit library, causing an error message from the loader.)
+     */
+    unsetenv("LD_PRELOAD");
+
+    /*
      * Look up the address for the real ioctl() call
      */
     real_ioctl = dlsym(RTLD_NEXT, "ioctl");
