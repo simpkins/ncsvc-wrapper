@@ -1,0 +1,13 @@
+This is a simple wrapper for the Linux version of Juniper's Network Connect VPN
+software.  It intercepts calls to modify the routing table, to prevent it from
+adding or deleting specific routes.
+
+The IGNORED_TARGETS array at the top of rtwrap.c controls which route targets
+should be ignored.
+
+To build it, just run "make".  To install it, run "make install" as root.
+By default it looks for a network connection installation in your home
+directory, and installs there.  Modify the paths at the top of the Makefile to
+control this.  (Run "make clean && make" after modifying these paths.)
+
+Use at your own risk.  It's not my fault if it makes your computer blow up.
